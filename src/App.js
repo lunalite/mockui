@@ -1,28 +1,37 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import ContentGrid from "./components/ContentGrid";
+import ControlGrid from "./components/ControlGrid";
+import PropTypes from 'prop-types';
+import {withStyles} from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 
-class App extends Component {
-  render() {
+const styles = theme => ({
+    root: {
+        flexGrow: 1,
+    }
+});
+
+function App(props) {
+    const {classes} = props;
+
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+        <div className={classes.root}>
+            <Grid container spacing={24}>
+                <Grid item xs={9}>
+                    <ContentGrid/>
+                </Grid>
+                <Grid item xs={3}>
+                    <ControlGrid/>
+                </Grid>
+            </Grid>
+        </div>
     );
-  }
 }
 
-export default App;
+App.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(App);
+
