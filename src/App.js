@@ -17,7 +17,7 @@ function App(props) {
 
     return (
         <div className={classes.root}>
-            <Grid container spacing={24}>
+            <Grid container>
                 <Grid item xs={9}>
                     <ContentGrid/>
                 </Grid>

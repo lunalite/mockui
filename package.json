@@ -4,10 +4,11 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^3.9.2",
+    "lodash": "^4.17.11",
+    "prop-types": "latest",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
-    "react-scripts": "2.1.8",
-    "prop-types": "latest"
+    "react-scripts": "2.1.8"
   },
   "scripts": {
     "start": "react-scripts start",
