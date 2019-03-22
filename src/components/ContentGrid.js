@@ -6,31 +6,36 @@ import _ from 'lodash';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import CheckBox from "@material-ui/core/es/internal/svg-icons/CheckBox";
 
 
 const styles = theme => ({
     root: {
         ...theme.mixins.gutters(),
-        backgroundColor: 'pink',
         height: '100vh',
         overflow: 'auto'
     },
 });
 
-function renderData(data) {
-    let listItem = ['Loading...'];
-    if (data.length > 0) {
-        listItem = _.map(data, x =>
-            <ListItem key={x.id}>
-                <CheckBox
-                    checked={false}
-                    disableRipple
-                />
+function renderData(data, selected, setSelected) {
+    function renderList(x) {
+        return (
+            <React.Fragment>
                 <ListItemText primary={JSON.stringify(x)}/>
-            </ListItem>
+            </React.Fragment>
         )
     }
+
+    const listItem = _.map(data, x => {
+        return (
+            <ListItem key={x.id} onClick={() => setSelected(x)}
+                      dense button
+                      selected={selected.id === x.id}
+            >
+                {renderList(x)}
+            </ListItem>
+        )
+    });
+
     return (
         <List>
             {listItem}
@@ -39,19 +44,26 @@ function renderData(data) {
 }
 
 function ContentGrid(props) {
-    const {classes} = props;
+    const {classes, selected, onSelected} = props;
     const [data, setData] = useState({});
 
     useEffect(() => {
-        fetch('https://jsonplaceholder.typicode.com/todos/')
-            .then(response => response.json())
-            .then(json => setData(json));
+        // fetch('https://jsonplaceholder.typicode.com/todos/')
+        //     .then(response => response.json())
+        //     .then(json => setData(json));
+        setData([
+            {
+                id: '1'
+            }, {
+                id: '2'
+            }
+        ])
     }, []);
 
     return (
         <div>
             <Paper className={classes.root} elevation={1}>
-                {renderData(data)}
+                {renderData(data, selected, onSelected)}
             </Paper>
         </div>
     )
@@ -59,6 +71,8 @@ function ContentGrid(props) {
 
 ContentGrid.propTypes = {
     classes: PropTypes.object.isRequired,
+    selected: PropTypes.object,
+    setSelected: PropTypes.func
 };
 
 export default withStyles(styles)(ContentGrid);
