@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -44,8 +44,8 @@ function renderData(data, selected, setSelected) {
 }
 
 function ContentGrid(props) {
-    const {classes, selected, onSelected} = props;
-    const [data, setData] = useState({});
+    const {classes, selected, setSelected, data, setData} = props;
+
 
     useEffect(() => {
         // fetch('https://jsonplaceholder.typicode.com/todos/')
@@ -63,7 +63,7 @@ function ContentGrid(props) {
     return (
         <div>
             <Paper className={classes.root} elevation={1}>
-                {renderData(data, selected, onSelected)}
+                {renderData(data, selected, setSelected)}
             </Paper>
         </div>
     )

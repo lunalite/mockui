@@ -15,15 +15,22 @@ const styles = () => ({
 function App(props) {
     const {classes} = props;
     const [selected, setSelected] = useState({});
+    const [data, setData] = useState({});
 
     return (
         <div className={classes.root}>
             <Grid container>
-                <Grid item xs={9}>
-                    <ContentGrid selected={selected} onSelected={setSelected}/>
+                <Grid item xs={8}>
+                    <ContentGrid
+                        selected={selected} setSelected={setSelected}
+                        data={data} setData={setData}
+                    />
                 </Grid>
-                <Grid item xs={3}>
-                    <ControlGrid selected={selected}/>
+                <Grid item xs={4}>
+                    <ControlGrid
+                        selected={selected}
+                        setData={setData}
+                    />
                 </Grid>
             </Grid>
         </div>
