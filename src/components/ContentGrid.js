@@ -6,6 +6,8 @@ import _ from 'lodash';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import {ListItemIcon} from "@material-ui/core";
+import Chip from "@material-ui/core/Chip";
 
 
 const styles = theme => ({
@@ -13,25 +15,47 @@ const styles = theme => ({
         ...theme.mixins.gutters(),
         height: '100vh',
         overflow: 'auto'
-    },
+    }
 });
 
-function renderData(data, selected, setSelected) {
-    function renderList(x) {
-        return (
-            <React.Fragment>
-                <ListItemText primary={JSON.stringify(x)}/>
-            </React.Fragment>
-        )
+function renderData(props) {
+    const {data, selected, setSelected} = props;
+
+    function renderChip(x) {
+        let chip;
+        switch (x) {
+            case 'New':
+                chip = (<Chip label={'New'} color={'default'}/>);
+                break;
+            case 'Sending':
+                chip = (<Chip label={'Sending'} color={'primary'}/>);
+                break;
+            case'Verifying':
+                chip = (<Chip label={'Verifying'} color={'primary'}/>);
+                break;
+            case 'PartialFill':
+                chip = (<Chip label={'PartialFill'} color={'primary'}/>);
+                break;
+            case 'Filled':
+                chip = (<Chip label={'Filled'} color={'secondary'}/>);
+                break;
+            default:
+                chip = (<div>NULL</div>);
+                break;
+        }
+
+        return chip
     }
 
     const listItem = _.map(data, x => {
         return (
             <ListItem key={x.id} onClick={() => setSelected(x)}
                       dense button
-                      selected={selected.id === x.id}
-            >
-                {renderList(x)}
+                      selected={selected.id === x.id}>
+                <ListItemText primary={JSON.stringify(x)}/>
+                <ListItemIcon>
+                    {renderChip(x)}
+                </ListItemIcon>
             </ListItem>
         )
     });
@@ -44,7 +68,7 @@ function renderData(data, selected, setSelected) {
 }
 
 function ContentGrid(props) {
-    const {classes, selected, setSelected, data, setData} = props;
+    const {classes, setData} = props;
 
 
     useEffect(() => {
@@ -63,7 +87,7 @@ function ContentGrid(props) {
     return (
         <div>
             <Paper className={classes.root} elevation={1}>
-                {renderData(data, selected, setSelected)}
+                {renderData(props)}
             </Paper>
         </div>
     )
